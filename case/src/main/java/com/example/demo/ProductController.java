@@ -1,11 +1,14 @@
-package org.example;
+package com.example.demo;
+
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final com.example.demo.ProductRepository productRepository;
 
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
