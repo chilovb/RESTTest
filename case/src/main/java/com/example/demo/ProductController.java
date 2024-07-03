@@ -17,14 +17,16 @@ public class ProductController {
         this.externalApiService = externalApiService;
     }
 
-    @GetMapping("/{countryCode}")
+    @GetMapping("/load/{countryCode}")
     public ResponseEntity<Product> getCountryInfo(@PathVariable String countryCode) throws Exception {
         // Optional validation (if not using CountryCode model)
         if (countryCode.length() != 2) {
             throw new IllegalArgumentException("Invalid country code format.");
         }
-
-        Product countryData = externalApiService.getCountryData(countryCode); // Call external API service
+        // TODO vertalen JSON naar product
+        Object data = externalApiService.getCountryData(countryCode); // Call external API service
+        Product countryData = new Product("xx", "fmt", "rg");
+        productRepository.insertCode(countryData.getName());
         return ResponseEntity.ok(countryData);
     }
 
