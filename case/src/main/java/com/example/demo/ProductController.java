@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,9 +10,28 @@ import java.util.List;
 public class ProductController {
 
     private final com.example.demo.ProductRepository productRepository;
+    private final ExternalApiService externalApiService; // Inject an ExternalApiService dependency
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, ExternalApiService externalApiService) {
         this.productRepository = productRepository;
+        this.externalApiService = externalApiService;
+    }
+
+    @GetMapping("/{countryCode}")
+    public ResponseEntity<Product> getCountryInfo(@PathVariable String countryCode) throws Exception {
+        // Optional validation (if not using CountryCode model)
+        if (countryCode.length() != 2) {
+            throw new IllegalArgumentException("Invalid country code format.");
+        }
+
+        Product countryData = externalApiService.getCountryData(countryCode); // Call external API service
+        return ResponseEntity.ok(countryData);
+    }
+
+
+    @GetMapping("/code/{code}")
+    public List<Product> findCountryByCountryCode(@PathVariable String code) {
+        return productRepository.findCountryByCountryCode(code);
     }
 
     @GetMapping
@@ -33,7 +53,8 @@ public class ProductController {
     public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
         Product existingProduct = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         existingProduct.setName(product.getName());
-        existingProduct.setPrice(product.getPrice());
+        existingProduct.setPostalCodeFmt(product.getPostalCodeFmt());
+        existingProduct.setRegex(product.getRegex());
         return productRepository.save(existingProduct);
     }
 

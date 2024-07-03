@@ -3,7 +3,7 @@ package com.example.demo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
 @Entity
 public class Product {
@@ -13,14 +13,13 @@ public class Product {
     private Long id;
 
     private String name;
-    private double price;
+    private String fmt;
+    private String regex;
 
-    public Product() {
-    }
-
-    public Product(String name, double price) {
+    public Product(String name, String fmt, String regex) {
         this.name = name;
-        this.price = price;
+        this.fmt =fmt;
+        this.regex = regex;
     }
 
     public Long getId() {
@@ -39,11 +38,19 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public String  getPostalCodeFmt() {
+        return fmt;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPostalCodeFmt(String fmt) {
+        this.fmt = fmt;
+    }
+
+    public String getRegex() {
+        return regex;
+    }
+
+    public void setRegex(String regex) {
+        this.regex = regex;
     }
 }
