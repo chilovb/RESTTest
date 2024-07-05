@@ -36,7 +36,7 @@ public class ProductController {
         return productRepository.findCountryByCountryCode(code);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
@@ -44,6 +44,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) {
         return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+    }
+
+    @GetMapping("/HI")
+    public Product getProductById() {
+        return null;
     }
 
     @PostMapping

@@ -17,11 +17,27 @@ public class ExternalApiServiceImpl implements ExternalApiService {
         RestTemplate restTemplate = new RestTemplate();
         String url = String.format(externalApiUrl, countryCode);
         //TODO hier JSON vertalen in product
-        ResponseEntity<Product> response = restTemplate.getForEntity(url, Product.class);
+        //ResponseEntity<Country> response = restTemplate.getForEntity(url, Country.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String body = skipBrackets(response.getBody());
+        Country country = Country.parseJson(body);
         if (response.getStatusCode() == HttpStatus.OK) {
-            return response.getBody();
+            //return makeProductFromCountry(response.getBody());
+            return makeProductFromCountry(country);
         } else {
             throw new Exception("Failed to retrieve data from external API. Status code: " + response.getStatusCodeValue());
         }
+    }
+
+    public static String skipBrackets(String str) {
+        if (str.isEmpty() || !str.startsWith("[") || !str.endsWith("]")) {
+            return str; // No brackets or invalid format, return original string
+        }
+        // Remove leading [ and trailing ]
+        return str.substring(1, str.length() - 1);
+    }
+
+    private Product makeProductFromCountry(Country body) {
+        return new Product(body.getCca2(), body.getPostalCode().getFormat(), body.getPostalCode().getRegex());
     }
 }
