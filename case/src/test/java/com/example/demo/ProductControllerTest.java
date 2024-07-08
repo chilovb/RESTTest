@@ -39,7 +39,7 @@ public class ProductControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         //assertEquals(expectedProduct, response.getBody());
         Mockito.verify(externalApiService).getCountryData(countryCode);
-        Mockito.verify(productRepository).insertCode(expectedProduct.getName());
+        Mockito.verify(productRepository).insertCode(expectedProduct.getName(), expectedProduct.getPostalCodeFmt(), expectedProduct.getRegex());
     }
 
     @Test

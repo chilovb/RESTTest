@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,23 +18,23 @@ public class ProductController {
         this.externalApiService = externalApiService;
     }
 
-    @GetMapping("/load/{countryCode}")
-    public ResponseEntity<Product> getCountryInfo(@PathVariable String countryCode) throws Exception {
+    @GetMapping("/load/{name}")
+    @Transactional
+    public ResponseEntity<Product> getCountryInfo(@PathVariable String name) throws Exception {
         // Optional validation (if not using CountryCode model)
-        if (countryCode.length() != 2) {
+        if (name.length() != 2) {
             throw new IllegalArgumentException("Invalid country code format.");
         }
         // translate JSON to product  in Country.getJson()
-        Product countryData  = (Product) externalApiService.getCountryData(countryCode); // Call external API service
-        //Product countryData = new Product("xx", "fmt", "rg");
-        productRepository.insertCode(countryData.getName());
+        Product countryData  = (Product) externalApiService.getCountryData(name); // Call external API service
+        productRepository.insertCode(countryData.getName(), countryData.getPostalCodeFmt(), countryData.getRegex());
         return ResponseEntity.ok(countryData);
     }
 
 
-    @GetMapping("/code/{code}")
-    public List<Product> findCountryByCountryCode(@PathVariable String code) {
-        return productRepository.findCountryByCountryCode(code);
+    @GetMapping("/code/{name}")
+    public List<Product> findCountryByCountryCode(@PathVariable String name) {
+        return productRepository.findCountryByCountryCode(name);
     }
 
     @GetMapping("/all")
