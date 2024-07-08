@@ -23,9 +23,9 @@ public class ProductController {
         if (countryCode.length() != 2) {
             throw new IllegalArgumentException("Invalid country code format.");
         }
-        // TODO vertalen JSON naar product
-        Object data = externalApiService.getCountryData(countryCode); // Call external API service
-        Product countryData = new Product("xx", "fmt", "rg");
+        // translate JSON to product  in Country.getJson()
+        Product countryData  = (Product) externalApiService.getCountryData(countryCode); // Call external API service
+        //Product countryData = new Product("xx", "fmt", "rg");
         productRepository.insertCode(countryData.getName());
         return ResponseEntity.ok(countryData);
     }

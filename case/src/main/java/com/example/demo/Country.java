@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Country {
 
-    private String name;
-    private String common;
-    private String official;
-    private String nativeName;
-    private String tld;
+    public Object name;
+//    private String common;
+//    private String official;
+//    private String nativeName;
+    public Object  tld;
 
     public String getCca2() {
         return cca2;
@@ -18,41 +18,49 @@ public class Country {
         this.cca2 = cca2;
     }
 
-    private String cca2;
-    private String ccn3;
-    private String cca3;
-    private String cioc;
-    private String independenttruestatus;
-    private String unMembertruecurrencies;
-    // ... other currency related fields
-
-    private String capital;
-    private String[] altSpellings;
-    private String region;
-    private String subregion;
-    private String languages;
-    // ... other language related fields
-
-    private double lat;
-    private double lng;
-    private boolean landlocked;
-    private String[] borders;
-    private double area;
-    private String demonyms;
-    // ... other demonym related fields
-
-    private String flag;
-    private Maps maps;
-    private long population;
-    private double gini;
-    private String fifa;
-    private CarSigns car;
-    private String[] timezones;
-    private String[] continents;
-    private Flags flags;
-    private CoatOfArms coatOfArms;
-    private String startOfWeek;
-    private CapitalInfo capitalInfo;
+    public String cca2;
+public String ccn3;
+public String cca3;
+public String cioc;
+public boolean independenttruestatus;
+public Object currencies;
+    public String unMember;
+//    // ... other currency related fields
+//
+public Object status;
+        public Object idd;
+    public Object root;
+    public Object suffixes;
+public Object capital;
+public Object[] altSpellings;
+    public String  region;
+    public String  subregion;
+    public Object languages;
+    public Object translations;
+//    // ... other language related fields
+//
+public Object latlng;
+    public Object landlocked;
+    public Object borders;
+    public Object area;
+    public Object demonyms;
+//    // ... other demonym related fields
+//
+public String flag;
+    public Object maps;
+    public Object population;
+    public Object gini;
+    public Object fifa;
+    public Object car;
+public Object timezones;
+    public Object continents;
+    public Object independent;
+    public Object alt;
+    public Object flags;
+    public Object svg;
+    public Object coatOfArms;
+    public Object startOfWeek;
+public Object capitalInfo;
 
     public PostalCode getPostalCode() {
         return postalCode;
@@ -70,29 +78,7 @@ public class Country {
     }
 
     // Getters and Setters for all fields
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCommon() {
-        return common;
-    }
-
-    public void setCommon(String common) {
-        this.common = common;
-    }
-
-    public String getOfficial() {
-        return official;
-    }
-
-    public void setOfficial(String official) {
-        this.official = official;
-    }
 
     // ... similar getters and setters for all fields
 
